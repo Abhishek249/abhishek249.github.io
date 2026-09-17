@@ -56,7 +56,7 @@
     .nav-links a:hover{color:var(--purple)}
     .nav-cta{display:inline-flex;align-items:center;gap:.45rem;background:var(--ink);color:#fff;border-radius:10px;padding:.66rem .92rem}
     .nav-cta:hover{background:var(--purple);color:#fff}
-    .hero{overflow:hidden;background:linear-gradient(135deg,#e7fbfc 0%,#f5ffff 55%,#fff 100%);padding:clamp(4rem,9vw,7.25rem) 0 5.5rem;border-bottom:1px solid #e0eeee}
+    .hero{overflow:hidden;background:linear-gradient(135deg,#e7fbfc 0%,#f5ffff 55%,#fff 100%);padding:clamp(2.6rem,5vw,4.6rem) 0 2rem;border-bottom:1px solid #e0eeee}
     .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,5.5rem);align-items:start}
     .hero h1{max-width:620px;margin:1.6rem 0 1.05rem;font-size:clamp(2.65rem,4.2vw,4.15rem);line-height:1.06;letter-spacing:-.07em;font-weight:800}
     .hero h1 .accent{color:var(--orange-deep)}
@@ -94,6 +94,9 @@
     .hero-note{margin:2rem 0 0;padding:1.2rem 1.4rem;border-radius:16px;background:linear-gradient(110deg,#7357ef,#a348f0);color:#fff;box-shadow:0 16px 30px rgba(115,87,239,.22)}
     .hero-note strong{display:block;font-family:Manrope,sans-serif;font-size:1.04rem;letter-spacing:-.02em;margin-bottom:.2rem}
     .hero-note span{font-size:.86rem;color:rgba(255,255,255,.82)}
+    .hero-jump{display:flex;justify-content:center;border-top:1px solid rgba(178,213,218,.72);margin-top:2rem;padding-top:1rem}
+    .jump-link{display:inline-flex;align-items:center;gap:.55rem;padding:.58rem .85rem;border-radius:999px;background:#fff;color:var(--purple);font-family:"Space Grotesk";font-size:.75rem;font-weight:600;box-shadow:0 8px 18px rgba(51,90,100,.08)}
+    .jump-link:hover{background:var(--purple);color:#fff}
     section{padding:clamp(5.1rem,10vw,8.5rem) 0}
     .section-head{max-width:720px;margin-bottom:2.55rem}
     .section-head h2{margin:1rem 0 .7rem;font-size:clamp(2.1rem,4vw,3.35rem);line-height:1.08;letter-spacing:-.065em;font-weight:800}
@@ -113,6 +116,7 @@
     .principle h3{font-family:Manrope;font-size:1.1rem;margin:0 0 .45rem;letter-spacing:-.03em}
     .principle p{font-size:.9rem;color:var(--ink-soft);margin:0}
     .gavel-section{background:linear-gradient(160deg,#f2edff 0%,#fbfaff 62%,#fff 100%)}
+    .gavel-section .principles{margin:2.35rem 0 4.5rem}
     .gavel-layout{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(2rem,6vw,5rem);align-items:start}
     .gavel-copy h2{margin:1rem 0 .75rem;font-size:clamp(2.25rem,4.7vw,4rem);line-height:1.03;letter-spacing:-.07em}
     .gavel-copy>p{color:var(--ink-soft);font-size:1.05rem;margin:0 0 1.5rem}
@@ -137,6 +141,23 @@
     .gavel-metrics b{display:block;font-family:Manrope;font-size:1.35rem;letter-spacing:-.05em}
     .gavel-metrics span{display:block;color:var(--muted);font-size:.7rem;margin-top:.15rem}
     .work-section{background:#fff}
+    .work-breadcrumb{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem;position:relative}
+    .work-breadcrumb::before{content:"";position:absolute;left:6%;right:6%;top:1.15rem;height:2px;background:#dfe7e9}
+    .path-item{position:relative;min-width:0}
+    .path-item:not(:last-child)::after{content:"→";position:absolute;z-index:2;top:.7rem;right:-.45rem;color:var(--purple);font-size:1rem;font-weight:700}
+    .path-marker{position:relative;z-index:3;display:grid;place-items:center;width:2.35rem;height:2.35rem;border-radius:50%;margin:0 auto .9rem;background:var(--orange);color:#fff;border:5px solid #fff;font-family:"Space Grotesk";font-size:.67rem;font-weight:600;box-shadow:0 4px 12px rgba(244,154,24,.2)}
+    .path-item:nth-child(2) .path-marker{background:var(--purple)}
+    .path-item:nth-child(3) .path-marker{background:var(--teal)}
+    .path-item:nth-child(4) .path-marker{background:#e26668}
+    .path-item:nth-child(5) .path-marker{background:var(--navy)}
+    .path-card{min-height:185px;padding:1.05rem;border:1px solid var(--line);border-radius:17px;background:#fff;box-shadow:0 8px 18px rgba(30,55,72,.05)}
+    .path-item:nth-child(2) .path-card{background:var(--lavender);border-color:#e1d8ff}
+    .path-item:nth-child(3) .path-card{background:var(--butter);border-color:#f4eab2}
+    .path-item:nth-child(4) .path-card{background:var(--sky);border-color:#c7ebed}
+    .path-item:nth-child(5) .path-card{background:var(--mint);border-color:#c9efdd}
+    .path-card small{display:block;color:var(--muted);font-family:"Space Grotesk";font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.65rem}
+    .path-card h3{font-family:Manrope;font-size:1rem;line-height:1.15;letter-spacing:-.035em;margin:0 0 .45rem}
+    .path-card p{color:var(--ink-soft);font-size:.78rem;line-height:1.45;margin:0}
     .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
     .work-card{border:1px solid var(--line);border-radius:22px;padding:1.55rem;min-height:295px;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
     .work-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
@@ -149,6 +170,29 @@
     .work-card p{color:var(--ink-soft);font-size:.92rem;margin:0;max-width:65ch}
     .work-card .metric{margin-top:auto;padding-top:1.3rem;font-family:"Space Grotesk";font-size:.75rem;color:var(--ink);font-weight:600}
     .work-card .metric span{color:var(--muted);font-weight:500}
+    .testimonials-section{background:linear-gradient(135deg,#fff8d9 0%,#fffdf4 48%,#f2edff 100%)}
+    .testimonial-shell{background:#fff;border:1px solid #eadfae;border-radius:25px;padding:clamp(1.25rem,3vw,2rem);box-shadow:var(--shadow)}
+    .testimonial-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
+    .testimonial-top .card-kicker{color:var(--purple)}
+    .testimonial-count{font-family:"Space Grotesk";font-size:.72rem;color:var(--muted)}
+    .testimonial-viewport{overflow:hidden;border-radius:17px}
+    .testimonial-track{display:flex;transition:transform .42s ease}
+    .testimonial-card{flex:0 0 100%;padding:clamp(1.35rem,4vw,2.8rem);background:linear-gradient(135deg,#f4f8ff,#fbfcff);border:1px solid #e4eaf2;border-radius:17px;min-height:285px;display:flex;flex-direction:column}
+    .testimonial-quote{font-family:Manrope;font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.36;letter-spacing:-.035em;color:var(--ink);max-width:900px;margin:0 0 1.6rem}
+    .testimonial-quote::before{content:"“";color:var(--orange);font-size:3.2rem;line-height:.4;vertical-align:-.42em;margin-right:.12rem}
+    .testimonial-person{display:flex;align-items:center;gap:.75rem;margin-top:auto}
+    .testimonial-avatar{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--purple);color:#fff;font-family:Manrope;font-size:.75rem;font-weight:700}
+    .testimonial-card:nth-child(2n) .testimonial-avatar{background:var(--orange)}
+    .testimonial-card:nth-child(3n) .testimonial-avatar{background:var(--teal)}
+    .testimonial-person strong{display:block;font-family:Manrope;font-size:.88rem}
+    .testimonial-person span{display:block;color:var(--muted);font-family:"Space Grotesk";font-size:.7rem;margin-top:.12rem}
+    .testimonial-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.15rem}
+    .testimonial-dots{display:flex;gap:.4rem}
+    .testimonial-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#d7dfe8;cursor:pointer}
+    .testimonial-dot.active{width:24px;border-radius:999px;background:var(--purple)}
+    .testimonial-arrows{display:flex;gap:.45rem}
+    .carousel-button{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;font-size:1.1rem}
+    .carousel-button:hover{border-color:var(--purple);color:var(--purple)}
     .foundation-section{background:var(--navy);color:#fff}
     .foundation-section .eyebrow{background:rgba(255,255,255,.12);color:#c8d2ff}
     .foundation-section .section-head p{color:#bbc7dc}
@@ -176,6 +220,9 @@
       .intro-copy{padding-top:0}
       .foundation-card.large{grid-row:auto}
       .contact-hero-card{max-width:620px}
+      .work-breadcrumb{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+      .work-breadcrumb::before{display:none}
+      .path-item:not(:last-child)::after{display:none}
     }
     @media (max-width:650px){
       .container{width:min(100% - 32px,1180px)}
@@ -184,12 +231,13 @@
       .nav-links a:not(.nav-cta){display:none}
       .nav-links{margin-left:auto}
       .nav-cta{padding:.58rem .7rem}
-      .hero{padding:3.7rem 0 4rem}
+      .hero{padding:2.7rem 0 1.5rem}
       .hero h1{font-size:clamp(2.6rem,12vw,3.7rem)}
       .proof-grid{gap:.45rem}
       .proof-card{padding:.75rem .35rem}
       .stat-value{font-size:1.35rem}
-      .principles,.work-grid{grid-template-columns:1fr}
+      .principles,.work-grid,.work-breadcrumb{grid-template-columns:1fr}
+      .path-item:not(:last-child)::after{display:none}
       .work-card.featured{grid-column:auto}
       .pipeline{grid-template-columns:1fr;gap:.35rem}
       .pipeline-arrow{transform:rotate(90deg);height:24px}
@@ -206,7 +254,7 @@
     <div class="container nav">
       <a class="brand" href="#home" aria-label="Abhishek Jain home"><span class="brand-mark">A</span><span>Abhishek Jain<small>Lead Software Engineer</small></span></a>
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#about">About</a>
+        <a href="#ai-work">About</a>
         <a href="#work">Work</a>
         <a href="#gavel">Gavel</a>
         <a href="#contact-panel">Contact</a>
@@ -252,24 +300,19 @@
           <div class="hero-note"><strong>Agents can write the pipeline.</strong><span>Gavel decides whether the result deserves to ship.</span></div>
         </div>
       </div>
+      <div class="container hero-jump"><a class="jump-link" href="#ai-work">Check out my latest AI work <span aria-hidden="true">↓</span></a></div>
     </section>
 
-    <section class="intro-section" id="about">
+    <section class="gavel-section" id="ai-work">
       <div class="container">
-        <div class="intro-layout">
-          <div class="section-head"><span class="eyebrow">The work I care about</span><h2>Build quickly. Ground deeply. Prove continuously.</h2></div>
-          <div class="intro-copy"><p>AI systems are becoming capable of writing real software. The hard part is making their output <strong>observable, testable, and safe to trust</strong> at the speed they produce it.</p><p>My work sits at that intersection: agentic applications, AI platform foundations, and the evaluation systems that keep them honest.</p></div>
-        </div>
+        <div class="section-head"><span class="eyebrow">How I build AI systems</span><h2>Build quickly. Ground deeply. Prove continuously.</h2><p>AI systems are becoming capable of writing real software. My work sits at the intersection of agentic applications, AI platform foundations, and the evaluation systems that keep them honest.</p></div>
         <div class="principles">
           <article class="principle"><div class="principle-icon">01</div><h3>Build the workflow</h3><p>Turn an agent from a chat window into a repeatable software delivery workflow with clear ownership and human checkpoints.</p></article>
           <article class="principle"><div class="principle-icon">02</div><h3>Connect the context</h3><p>Use MCP and system integrations to ground decisions in the code, data, runbooks, and production state that actually matter.</p></article>
           <article class="principle"><div class="principle-icon">03</div><h3>Prove the result</h3><p>Compare candidate output against golden references with deterministic metrics, evidence, and an unambiguous verdict.</p></article>
         </div>
       </div>
-    </section>
-
-    <section class="gavel-section" id="gavel">
-      <div class="container gavel-layout">
+      <div class="container gavel-layout" id="gavel">
         <div class="gavel-copy"><span class="eyebrow">Flagship project</span><h2>Meet <span style="color:var(--purple)">Gavel.</span></h2><p>An MCP-native evaluation harness for agent-built data pipelines. It collects evidence, compares it with a golden result, and emits a verdict the agent cannot override.</p><a class="project-link" href="https://github.com/Abhishek249/gavel-mcp">View the project on GitHub <span aria-hidden="true">↗</span></a></div>
         <div class="gavel-card">
           <div class="card-top"><div class="card-kicker">MCP evaluation harness</div><span class="status">open source</span></div>
@@ -287,12 +330,32 @@
     <section class="work-section" id="work">
       <div class="container">
         <div class="section-head"><span class="eyebrow">Selected work</span><h2>Production systems, not toy demos.</h2><p>Every project below started with an operational problem and ended with a system people actually used.</p></div>
-        <div class="work-grid">
-          <article class="work-card featured"><span class="work-tag">Picarro · Agentic engineering</span><h3>An agentic SDLC for geospatial analytics</h3><p>Built and operated LLM-agent workflows across product grooming, implementation, validation, and deployment for a next-generation geospatial analytics platform. Established reusable playbooks, evaluation cadence, and human-in-the-loop checkpoints that let a 16+ engineer group move faster without losing engineering judgment.</p><div class="metric">1.7–2.3× sprint velocity <span>vs. a comparable prior build</span></div></article>
-          <article class="work-card warm"><span class="work-tag">Picarro · 0→1 · Production</span><h3>OTA Admin Portal</h3><p>Created visibility into Picarro-to-ERP transfers with real-time status, payload inspection, consumer configuration, and re-aiming. A manual 1–4 hour operational cycle became a self-service workflow that takes seconds.</p><div class="metric">React · Tailwind · FastAPI · Postgres</div></article>
-          <article class="work-card lilac"><span class="work-tag">Picarro · Data platform</span><h3>Validation-on-loop</h3><p>Connected Kafka, Dagster, Postgres/PostGIS, and map-based checks into a repeatable validation playbook across local, staging, and integration environments.</p><div class="metric">~4× faster validation <span>than manual runbooks</span></div></article>
-          <article class="work-card sky"><span class="work-tag">OneGas · Program rescue</span><h3>From disruption to production</h3><p>Tech-led a cross-functional team of seven, restored stakeholder confidence in six weeks, and delivered the mobile program in six months. Redesigned SQLAlchemy queries to cut endpoint latency from 10 seconds to 1.</p><div class="metric">10× API improvement <span>· DevContainers · CI quality gates</span></div></article>
-          <article class="work-card warm"><span class="work-tag">Picarro · Fleet infrastructure</span><h3>Zero-downtime EU migration</h3><p>Solo-built an API-driven fleet monitoring and switchover portal using Tailscale, FastAPI, and React to move 80+ analyzers across seven European customers without an outage.</p><div class="metric">80+ analyzers <span>· zero downtime</span></div></article>
+        <div class="work-breadcrumb" aria-label="Selected work timeline">
+          <article class="path-item"><div class="path-marker">01</div><div class="path-card"><small>Picarro · Agentic engineering</small><h3>Agentic SDLC</h3><p>Established the workflow, playbooks, and evaluation cadence for a 16+ engineer group.</p></div></article>
+          <article class="path-item"><div class="path-marker">02</div><div class="path-card"><small>Open source · MCP</small><h3>Gavel</h3><p>Built the evaluation harness that turns pipeline evidence into a deterministic verdict.</p></div></article>
+          <article class="path-item"><div class="path-marker">03</div><div class="path-card"><small>Picarro · 0→1</small><h3>OTA Admin Portal</h3><p>Replaced a 1–4 hour ERP-transfer workflow with self-service tooling that takes seconds.</p></div></article>
+          <article class="path-item"><div class="path-marker">04</div><div class="path-card"><small>Picarro · Data platform</small><h3>Validation-on-loop</h3><p>Connected Kafka, Dagster, PostGIS, and map checks across three environments.</p></div></article>
+          <article class="path-item"><div class="path-marker">05</div><div class="path-card"><small>OneGas · Program rescue</small><h3>10× API improvement</h3><p>Led a team of seven from disruption to production in six months.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials-section" id="testimonials">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">What colleagues say</span><h2>Trusted to lead when the work gets complicated.</h2><p>Feedback from teammates and leaders across the programs I helped stabilize, ship, and grow.</p></div>
+        <div class="testimonial-shell">
+          <div class="testimonial-top"><span class="card-kicker">Picarro feedback</span><span class="testimonial-count" id="testimonial-count">1 / 6</span></div>
+          <div class="testimonial-viewport">
+            <div class="testimonial-track" id="testimonial-track">
+              <article class="testimonial-card"><p class="testimonial-quote">Abhishek has been a valuable member of the P-Cubed team for a long time. He is attentive and responsive, eager to contribute, and has an excellent ability to develop independently, ask concise questions, and incorporate feedback into his work. His recent contributions on the Mobile App project have been particularly valuable.</p><div class="testimonial-person"><span class="testimonial-avatar">AK</span><div><strong>Andrew Kidd</strong><span>Engineering colleague · Picarro</span></div></div></article>
+              <article class="testimonial-card"><p class="testimonial-quote">Abhishek has been an absolute rock star—demonstrating outstanding ownership, leadership, and technical excellence across multiple high-impact projects. His swift action reduced downtime, restored customer trust, and prevented multiple escalations. He leads with impact, shows up with solutions, and raises the bar for excellence.</p><div class="testimonial-person"><span class="testimonial-avatar">JC</span><div><strong>Jacob Cansler</strong><span>Engineering colleague · Picarro</span></div></div></article>
+              <article class="testimonial-card"><p class="testimonial-quote">Abhishek showed incredible leadership and proficiency in his work by playing the primary role in bringing the OTA integration with NiSource to a successful close. He volunteered to lead the effort, solve root-cause issues, and deploy production fixes while stabilizing the entire software development life cycle.</p><div class="testimonial-person"><span class="testimonial-avatar">KK</span><div><strong>Kyle Kreuser</strong><span>Engineering colleague · Picarro</span></div></div></article>
+              <article class="testimonial-card"><p class="testimonial-quote">Abhishek was instrumental in helping the MobileApp project stay on track. He showed a strong team-player mentality, stepped into a critical role, and brought organization and awareness to pipeline issues that could have caused significant delays. He was also a great mentor to the Bitkraft team.</p><div class="testimonial-person"><span class="testimonial-avatar">MP</span><div><strong>Mark Paniagua</strong><span>Engineering colleague · Picarro</span></div></div></article>
+              <article class="testimonial-card"><p class="testimonial-quote">I have worked with Abhishek for a number of years and seen him grow professionally throughout that time. He has always been diligent, knowledgeable, thoughtful, and detail-oriented. He is willing to take the time to help the QA team whenever necessary and provides useful guidance in testing strategy.</p><div class="testimonial-person"><span class="testimonial-avatar">RK</span><div><strong>Richard Kawasaki</strong><span>QA and engineering colleague · Picarro</span></div></div></article>
+              <article class="testimonial-card"><p class="testimonial-quote">Abhishek, thank you for reaching out for feedback. You are a rockstar in the best sense of the term—reliable, consistent, and someone the team can always count on to deliver high-quality work. I’m looking forward to seeing how you continue to grow in visibility and influence.</p><div class="testimonial-person"><span class="testimonial-avatar">SM</span><div><strong>Sean MacMullin</strong><span>Engineering leader · Picarro</span></div></div></article>
+            </div>
+          </div>
+          <div class="testimonial-controls"><div class="testimonial-dots" id="testimonial-dots" aria-label="Choose testimonial"></div><div class="testimonial-arrows"><button class="carousel-button" id="testimonial-prev" type="button" aria-label="Previous testimonial">←</button><button class="carousel-button" id="testimonial-next" type="button" aria-label="Next testimonial">→</button></div></div>
         </div>
       </div>
     </section>
@@ -311,5 +374,30 @@
   </main>
 
   <footer><div class="container footer-row"><span>© 2026 Abhishek Jain · Santa Clara, CA</span><span><a href="https://github.com/Abhishek249">GitHub</a> · <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé</a></span></div></footer>
+  <script>
+    (() => {
+      const track = document.getElementById('testimonial-track');
+      const cards = Array.from(track.children);
+      const dots = document.getElementById('testimonial-dots');
+      const count = document.getElementById('testimonial-count');
+      let current = 0;
+      cards.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'testimonial-dot' + (index === 0 ? ' active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Show testimonial ' + (index + 1));
+        dot.addEventListener('click', () => goTo(index));
+        dots.appendChild(dot);
+      });
+      function goTo(index) {
+        current = (index + cards.length) % cards.length;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.querySelectorAll('.testimonial-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === current));
+        count.textContent = (current + 1) + ' / ' + cards.length;
+      }
+      document.getElementById('testimonial-prev').addEventListener('click', () => goTo(current - 1));
+      document.getElementById('testimonial-next').addEventListener('click', () => goTo(current + 1));
+    })();
+  </script>
 </body>
 </html>
