@@ -73,6 +73,10 @@
     .button.primary:hover{background:var(--orange-deep)}
     .button.light{background:#fff;border-color:#d3dde3;color:var(--ink)}
     .button.dark{background:var(--navy);color:#fff}
+    .button.linkedin{background:#0a66c2;color:#fff;box-shadow:0 8px 16px rgba(10,102,194,.2)}
+    .button.linkedin:hover{background:#084f96}
+    .button.resume{background:var(--mint);border-color:#bfe8d3;color:#14785f}
+    .button.resume:hover{background:#d5f6e4}
     .button.small{padding:.6rem .78rem;font-size:.75rem;border-radius:9px}
     .hero-side{position:relative;padding-top:1.1rem}
     .contact-hero-card{background:#fff;border:1px solid #f0e6b5;border-radius:25px;padding:clamp(1.35rem,3.4vw,2.2rem);box-shadow:var(--shadow)}
@@ -83,14 +87,6 @@
     .contact-detail span{font-family:"Space Grotesk";font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
     .contact-detail a,.contact-detail strong{color:var(--purple);font-size:.82rem;font-weight:600;text-align:right}
     .contact-actions{display:flex;flex-wrap:wrap;gap:.55rem}
-    .proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:1.15rem}
-    .proof-card{padding:.78rem .85rem;border-radius:14px;background:rgba(255,255,255,.72);border:1px solid rgba(219,231,234,.9);display:flex;align-items:center;justify-content:space-between;gap:.55rem}
-    .stat-value{font-family:Manrope,sans-serif;font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;line-height:1;color:var(--purple);letter-spacing:-.07em}
-    .proof-card:nth-child(2) .stat-value{color:var(--orange)}
-    .proof-card:nth-child(3) .stat-value{color:var(--teal)}
-    .proof-card:nth-child(4) .stat-value{color:#e26668}
-    .stat-label{margin-top:.65rem;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
-    .proof-card .stat-label{margin-top:0;text-align:right;line-height:1.2}
     .hero-note{margin:2rem 0 0;padding:1.2rem 1.4rem;border-radius:16px;background:linear-gradient(110deg,#7357ef,#a348f0);color:#fff;box-shadow:0 16px 30px rgba(115,87,239,.22)}
     .hero-note strong{display:block;font-family:Manrope,sans-serif;font-size:1.04rem;letter-spacing:-.02em;margin-bottom:.2rem}
     .hero-note span{font-size:.86rem;color:rgba(255,255,255,.82)}
@@ -122,6 +118,12 @@
     .gavel-copy>p{color:var(--ink-soft);font-size:1.05rem;margin:0 0 1.5rem}
     .project-link{display:inline-flex;align-items:center;gap:.45rem;color:var(--purple);font-family:"Space Grotesk";font-weight:600;font-size:.84rem}
     .project-link:hover{text-decoration:underline;text-underline-offset:4px}
+    .workflow-card{margin-top:1.2rem;padding:1rem;border:1px solid #e5defb;border-radius:18px;background:rgba(255,255,255,.78);box-shadow:0 10px 22px rgba(76,57,147,.08)}
+    .workflow-card h3{font-family:Manrope;font-size:1rem;letter-spacing:-.035em;margin:0 0 .2rem}
+    .workflow-card>p{color:var(--muted);font-size:.76rem;margin:0}
+    .workflow-card .pipeline{grid-template-columns:1fr;gap:.25rem;margin:.9rem 0 0}
+    .workflow-card .pipeline-node{min-height:66px;padding:.7rem}
+    .workflow-card .pipeline-arrow{height:18px;transform:rotate(90deg);line-height:18px}
     .gavel-card{background:#fff;border:1px solid #e5defb;border-radius:26px;padding:clamp(1.25rem,3vw,2rem);box-shadow:var(--shadow)}
     .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
     .card-kicker{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);font-weight:600}
@@ -233,9 +235,6 @@
       .nav-cta{padding:.58rem .7rem}
       .hero{padding:2.7rem 0 1.5rem}
       .hero h1{font-size:clamp(2.6rem,12vw,3.7rem)}
-      .proof-grid{gap:.45rem}
-      .proof-card{padding:.75rem .35rem}
-      .stat-value{font-size:1.35rem}
       .principles,.work-grid,.work-breadcrumb{grid-template-columns:1fr}
       .path-item:not(:last-child)::after{display:none}
       .work-card.featured{grid-column:auto}
@@ -258,7 +257,6 @@
         <a href="#work">Work</a>
         <a href="#gavel">Gavel</a>
         <a href="#contact-panel">Contact</a>
-        <a class="nav-cta" href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
@@ -277,7 +275,6 @@
           </ul>
           <div class="actions">
             <a class="button primary" href="#gavel">Explore Gavel <span aria-hidden="true">→</span></a>
-            <a class="button light" href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Download résumé</a>
           </div>
         </div>
         <div class="hero-side">
@@ -289,13 +286,7 @@
               <div class="contact-detail"><span>Email</span><a href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a></div>
               <div class="contact-detail"><span>Phone</span><strong>Available on request</strong></div>
             </div>
-            <div class="contact-actions"><a class="button primary small" href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a><a class="button dark small" href="https://github.com/Abhishek249">GitHub ↗</a></div>
-          </div>
-          <div class="proof-grid" aria-label="Selected career metrics">
-            <div class="proof-card"><span class="stat-value">8+</span><span class="stat-label">years</span></div>
-            <div class="proof-card"><span class="stat-value">32/32</span><span class="stat-label">defects caught</span></div>
-            <div class="proof-card"><span class="stat-value">3.2ms</span><span class="stat-label">MCP p50</span></div>
-            <div class="proof-card"><span class="stat-value">10×</span><span class="stat-label">API gain</span></div>
+            <div class="contact-actions"><a class="button linkedin small" href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a><a class="button dark small" href="https://github.com/Abhishek249">GitHub ↗</a><a class="button resume small" href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé ↗</a></div>
           </div>
           <div class="hero-note"><strong>Agents can write the pipeline.</strong><span>Gavel decides whether the result deserves to ship.</span></div>
         </div>
@@ -313,15 +304,12 @@
         </div>
       </div>
       <div class="container gavel-layout" id="gavel">
-        <div class="gavel-copy"><span class="eyebrow">Flagship project</span><h2>Meet <span style="color:var(--purple)">Gavel.</span></h2><p>An MCP-native evaluation harness for agent-built data pipelines. It collects evidence, compares it with a golden result, and emits a verdict the agent cannot override.</p><a class="project-link" href="https://github.com/Abhishek249/gavel-mcp">View the project on GitHub <span aria-hidden="true">↗</span></a></div>
+        <div class="gavel-copy"><span class="eyebrow">Flagship project</span><h2>Meet <span style="color:var(--purple)">Gavel.</span></h2><p>An MCP-native evaluation harness for agent-built data pipelines. It collects evidence, compares it with a golden result, and emits a verdict the agent cannot override.</p><a class="project-link" href="https://github.com/Abhishek249/gavel-mcp">View the project on GitHub <span aria-hidden="true">↗</span></a><div class="workflow-card"><h3>How Gavel reaches a verdict</h3><p>Three steps from pipeline output to an evidence-backed decision.</p><div class="pipeline" aria-label="Gavel three-step workflow"><div class="pipeline-node"><strong>Golden + candidate</strong><span>datasets and live system evidence</span></div><div class="pipeline-arrow" aria-hidden="true">↓</div><div class="pipeline-node"><strong>Deterministic metrics</strong><span>exact · row count · Jaccard · area drift</span></div><div class="pipeline-arrow" aria-hidden="true">↓</div><div class="pipeline-node verdict"><strong>Validation report</strong><span>evidence-backed PASS / FAIL</span></div></div></div></div>
         <div class="gavel-card">
           <div class="card-top"><div class="card-kicker">MCP evaluation harness</div><span class="status">open source</span></div>
           <h3>The LLM decides when to validate. Gavel decides pass or fail.</h3>
           <p class="tagline">Declarative sandboxes · golden datasets · deterministic evidence</p>
           <p>A sandbox pins the system components, candidate and golden datasets, metrics, thresholds, and required evidence. The engine returns a structured report with the exact checks that passed or failed.</p>
-          <div class="pipeline" aria-label="Gavel evaluation flow">
-            <div class="pipeline-node"><strong>Golden + candidate</strong><span>datasets and live system evidence</span></div><div class="pipeline-arrow" aria-hidden="true">→</div><div class="pipeline-node"><strong>Deterministic metrics</strong><span>exact · row count · Jaccard · area drift</span></div><div class="pipeline-arrow" aria-hidden="true">→</div><div class="pipeline-node verdict"><strong>Validation report</strong><span>evidence-backed PASS / FAIL</span></div>
-          </div>
           <div class="gavel-metrics"><div><b>100%</b><span>defect recall</span></div><div><b>0%</b><span>false positives</span></div><div><b>~3ms</b><span>MCP latency p50</span></div></div>
         </div>
       </div>
