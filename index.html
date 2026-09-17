@@ -1,428 +1,311 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Abhishek Jain — Lead Software Engineer building LLM agents into production delivery workflows, and the evaluation harnesses that prove their output is correct. Author of Gavel, an MCP-native eval harness.">
-<meta name="author" content="Abhishek Jain">
-<link rel="canonical" href="https://abhishek249.github.io/">
-
-<meta property="og:type" content="profile">
-<meta property="og:title" content="Abhishek Jain — Agentic Engineering">
-<meta property="og:description" content="Agents can write the pipeline. Proving the output is correct is the harder problem. Author of Gavel, an MCP-native evaluation harness for agent-built data pipelines.">
-<meta property="og:url" content="https://abhishek249.github.io/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Abhishek Jain — Agentic Engineering">
-<meta name="twitter:description" content="Agents can write the pipeline. Proving the output is correct is the harder problem.">
-
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%94%AC</text></svg>">
-
-<style>
-  :root{color-scheme:light dark}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0}
-  img{max-width:100%}
-  [hidden]{display:none!important}
-</style>
-<title>Abhishek Jain</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
-
-<style>
-:root{
-  --paper:#F1F3F6;
-  --surface:#FFFFFF;
-  --sunk:#E7EAEF;
-  --ink:#11151C;
-  --ink-2:#39424F;
-  --muted:#6B7584;
-  --rule:#DBE0E7;
-  --rule-hard:#BEC6D1;
-  --accent:#2B3A67;
-  --accent-soft:#E3E7F1;
-  --verdict:#2C7A55;
-  --verdict-soft:#DFEDE5;
-  --warn:#8A5A12;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#0E1217; --surface:#161B22; --sunk:#1D232C;
-    --ink:#E9ECF1; --ink-2:#C2C9D4; --muted:#8B95A4;
-    --rule:#262D38; --rule-hard:#3A4350;
-    --accent:#9DB0E2; --accent-soft:#1C2436;
-    --verdict:#71C29A; --verdict-soft:#18291F; --warn:#D2A05A;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0E1217; --surface:#161B22; --sunk:#1D232C;
-  --ink:#E9ECF1; --ink-2:#C2C9D4; --muted:#8B95A4;
-  --rule:#262D38; --rule-hard:#3A4350;
-  --accent:#9DB0E2; --accent-soft:#1C2436;
-  --verdict:#71C29A; --verdict-soft:#18291F; --warn:#D2A05A;
-}
-
-*{box-sizing:border-box}
-body{
-  background:var(--paper); color:var(--ink);
-  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:64rem;margin:0 auto;padding-inline:clamp(1rem,4vw,3rem);padding-block:0 4rem}
-p{margin:0 0 1em}
-a{color:var(--accent);text-underline-offset:2px}
-a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
-.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace}
-
-/* ---------- masthead ---------- */
-header.top{padding-block:clamp(2.5rem,6vw,4.5rem) 0}
-.name{
-  font-family:Archivo,system-ui,sans-serif;font-weight:700;
-  font-size:clamp(1.15rem,.9rem + 1vw,1.4rem);letter-spacing:-.01em;
-  margin:0 0 1.6rem;display:flex;flex-wrap:wrap;gap:.2rem .9rem;align-items:baseline;
-}
-.name span{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:500;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-}
-h1{
-  font-family:Archivo,system-ui,sans-serif;font-weight:600;
-  font-size:clamp(1.9rem,1.1rem + 3.4vw,3.15rem);line-height:1.08;
-  letter-spacing:-.022em;margin:0 0 1.2rem;max-width:20ch;text-wrap:balance;
-}
-h1 em{font-style:normal;color:var(--accent)}
-.sub{font-size:clamp(1rem,.95rem + .3vw,1.125rem);color:var(--ink-2);max-width:56ch;margin:0 0 2rem}
-.links{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.8rem}
-.links a{
-  font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.02em;
-  text-decoration:none;color:var(--ink);background:var(--surface);
-  border:1px solid var(--rule-hard);padding:.5rem .85rem;border-radius:3px;
-  display:inline-flex;align-items:center;gap:.45rem;
-}
-.links a:hover{border-color:var(--accent);color:var(--accent)}
-.links a.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
-:root[data-theme="dark"] .links a.primary,
-html:not([data-theme="light"]) .links a.primary{color:var(--paper)}
-
-/* ---------- readout strip ---------- */
-.readout{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));
-  border-top:1px solid var(--rule-hard);border-bottom:1px solid var(--rule-hard);
-  margin-bottom:clamp(3rem,7vw,4.5rem);
-}
-.readout div{padding:1rem 1.1rem 1.05rem 0;border-bottom:1px solid var(--rule)}
-.readout div:nth-last-child(-n+2){border-bottom:none}
-@media (max-width:40rem){.readout div{border-bottom:1px solid var(--rule)}
-  .readout div:last-child{border-bottom:none}}
-.readout b{
-  font-family:Archivo,sans-serif;font-weight:600;font-size:1.65rem;line-height:1;
-  display:block;margin-bottom:.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
-}
-.readout small{font-size:.78rem;color:var(--muted);line-height:1.45;display:block}
-
-/* ---------- sections ---------- */
-section{margin-bottom:clamp(3rem,7vw,4.5rem)}
-.sec-grid{display:grid;gap:.6rem 2.5rem}
-.sec-grid > *{min-width:0}
-@media (min-width:56rem){.sec-grid{grid-template-columns:9rem 1fr}}
-.sec-label{
-  font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);padding-top:.5rem;
-}
-h2{
-  font-family:Archivo,sans-serif;font-weight:600;
-  font-size:clamp(1.35rem,1.1rem + 1vw,1.75rem);line-height:1.18;
-  letter-spacing:-.014em;margin:0 0 .8rem;text-wrap:balance;
-}
-h3{font-family:Archivo,sans-serif;font-weight:600;font-size:1.0625rem;margin:1.8rem 0 .4rem;letter-spacing:-.005em}
-.body{max-width:64ch}
-.body p{color:var(--ink-2)}
-.body p strong{color:var(--ink);font-weight:600}
-
-/* ---------- gavel panel ---------- */
-.panel{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:clamp(1.1rem,3vw,1.8rem);margin-bottom:1.4rem;min-width:0}
-.panel-head{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:baseline;margin-bottom:.3rem}
-.panel-head h3{margin:0;font-size:1.2rem}
-.tagline{font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--accent);margin:0 0 1.1rem}
-.chip{
-  font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-  padding:.2rem .5rem;border-radius:2px;font-weight:600;background:var(--sunk);color:var(--ink-2);
-}
-.chip.pass{background:var(--verdict-soft);color:var(--verdict)}
-.chip.next{background:var(--accent-soft);color:var(--accent)}
-
-.scroll{overflow-x:auto;max-width:100%;margin:1.2rem 0 .4rem}
-svg.flow{min-width:660px;width:100%;height:auto;display:block}
-.cap{font-size:.8rem;color:var(--muted);margin:.2rem 0 0;max-width:64ch}
-
-table{border-collapse:collapse;width:100%;min-width:24rem;font-size:.875rem}
-thead th{
-  text-align:left;font-family:"JetBrains Mono",monospace;font-size:.68rem;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;
-  padding:0 1rem .5rem 0;border-bottom:1px solid var(--rule-hard);
-}
-tbody td{padding:.6rem 1rem .6rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
-tbody tr:last-child td{border-bottom:none}
-td.n{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
-td.k{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--ink-2);white-space:nowrap}
-
-/* ---------- work list ---------- */
-ol.work{list-style:none;margin:0;padding:0}
-ol.work li{padding:1.15rem 0;border-bottom:1px solid var(--rule)}
-ol.work li:first-child{border-top:1px solid var(--rule-hard)}
-ol.work h4{
-  font-family:Archivo,sans-serif;font-weight:600;font-size:1.02rem;
-  margin:0 0 .3rem;letter-spacing:-.004em;
-}
-ol.work p{margin:0;color:var(--ink-2);font-size:.925rem;max-width:64ch}
-ol.work .meta{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--muted);
-  display:block;margin-top:.5rem;letter-spacing:.03em;
-}
-
-/* ---------- stack ---------- */
-dl.stack{margin:0;border-top:1px solid var(--rule-hard)}
-dl.stack > div{display:grid;gap:.1rem .9rem;padding:.75rem 0;border-bottom:1px solid var(--rule)}
-@media (min-width:46rem){dl.stack > div{grid-template-columns:13rem 1fr}}
-dl.stack dt{font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding-top:.15rem}
-dl.stack dd{margin:0;font-size:.9rem;color:var(--ink-2);line-height:1.55}
-
-/* ---------- contact ---------- */
-.contact{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:clamp(1.3rem,4vw,2.2rem)}
-.contact h2{margin-bottom:.5rem}
-.contact p{color:var(--ink-2);max-width:56ch}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Abhishek Jain — Lead Software Engineer building agentic systems, evaluation harnesses, and AI platform foundations.">
+  <meta name="author" content="Abhishek Jain">
+  <link rel="canonical" href="https://abhishek249.github.io/">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Abhishek Jain — Agentic Engineering">
+  <meta property="og:description" content="I build agentic systems that can prove their output.">
+  <meta property="og:url" content="https://abhishek249.github.io/">
+  <meta name="twitter:card" content="summary">
+  <title>Abhishek Jain — Agentic Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#101827;
+      --ink-soft:#455264;
+      --muted:#697589;
+      --line:#dce4ea;
+      --paper:#f8fbfc;
+      --white:#fff;
+      --sky:#e7fbfc;
+      --mint:#e8fbf1;
+      --lavender:#f2edff;
+      --butter:#fff8d9;
+      --orange:#f49a18;
+      --orange-deep:#e97900;
+      --teal:#11b99c;
+      --purple:#7357ef;
+      --navy:#17213c;
+      --shadow:0 18px 42px rgba(30,55,72,.10);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:16px;line-height:1.58;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
+    img{max-width:100%}
+    .container{width:min(1180px,calc(100% - 48px));margin:0 auto}
+    .display,.heading,.brand{font-family:Manrope,system-ui,sans-serif}
+    .mono,.eyebrow,.stat-label,.card-kicker,.nav-links a,.button{font-family:"Space Grotesk",system-ui,sans-serif}
+    .eyebrow{display:inline-flex;align-items:center;gap:.45rem;color:#6550d9;background:var(--lavender);border-radius:999px;padding:.42rem .8rem;font-size:.75rem;letter-spacing:.04em;font-weight:600}
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+    .site-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);border-bottom:1px solid rgba(220,228,234,.9);backdrop-filter:blur(16px)}
+    .nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:inline-flex;align-items:center;gap:.7rem;font-size:1.04rem;font-weight:800;letter-spacing:-.03em}
+    .brand-mark{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:var(--orange);color:#fff;font-size:1.05rem;box-shadow:0 8px 18px rgba(244,154,24,.25)}
+    .brand small{display:block;color:var(--muted);font-family:"Space Grotesk",sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-top:.05rem}
+    .nav-links{display:flex;align-items:center;gap:1.55rem;color:var(--ink-soft)}
+    .nav-links a{font-size:.8rem;font-weight:500}
+    .nav-links a:hover{color:var(--purple)}
+    .nav-cta{display:inline-flex;align-items:center;gap:.45rem;background:var(--ink);color:#fff;border-radius:10px;padding:.66rem .92rem}
+    .nav-cta:hover{background:var(--purple);color:#fff}
+    .hero{overflow:hidden;background:linear-gradient(135deg,#e7fbfc 0%,#f5ffff 55%,#fff 100%);padding:clamp(4rem,9vw,7.25rem) 0 5.5rem;border-bottom:1px solid #e0eeee}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,6vw,5.5rem);align-items:center}
+    .hero h1{max-width:680px;margin:1.6rem 0 1.05rem;font-size:clamp(3rem,6.5vw,5.7rem);line-height:1.04;letter-spacing:-.075em;font-weight:800}
+    .hero h1 .accent{color:var(--orange-deep)}
+    .hero h1 .accent-two{color:var(--purple)}
+    .hero-lede{max-width:590px;color:var(--ink-soft);font-size:clamp(1.05rem,1.8vw,1.22rem);line-height:1.58;margin:0 0 1.25rem}
+    .hero-lede strong{color:var(--ink);font-weight:700;background:linear-gradient(transparent 60%,#fff1a8 60%)}
+    .hero-points{list-style:none;padding:0;margin:1.55rem 0 2rem;display:grid;gap:.58rem;color:var(--ink-soft)}
+    .hero-points li{display:flex;align-items:center;gap:.62rem}
+    .check{display:inline-grid;place-items:center;flex:0 0 auto;width:21px;height:21px;border-radius:50%;background:var(--teal);color:#fff;font-size:.75rem;font-weight:700}
+    .actions{display:flex;flex-wrap:wrap;gap:.72rem}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:11px;padding:.86rem 1.12rem;border:1px solid transparent;font-size:.82rem;font-weight:600;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+    .button:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(28,42,61,.12)}
+    .button.primary{background:var(--orange);color:#fff;box-shadow:0 9px 18px rgba(244,154,24,.22)}
+    .button.primary:hover{background:var(--orange-deep)}
+    .button.light{background:#fff;border-color:#d3dde3;color:var(--ink)}
+    .button.dark{background:var(--navy);color:#fff}
+    .button.small{padding:.6rem .78rem;font-size:.75rem;border-radius:9px}
+    .hero-side{position:relative}
+    .stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.15rem}
+    .stat-card{min-height:156px;padding:1.35rem 1.3rem;border:1px solid rgba(219,231,234,.9);border-radius:18px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+    .stat-card:nth-child(2){transform:translateY(18px)}
+    .stat-card:nth-child(3){transform:translateY(-4px)}
+    .stat-card:nth-child(4){transform:translateY(14px)}
+    .stat-value{font-family:Manrope,sans-serif;font-size:clamp(2rem,4vw,3.1rem);font-weight:800;line-height:1;color:var(--purple);letter-spacing:-.07em}
+    .stat-card:nth-child(2) .stat-value{color:var(--orange)}
+    .stat-card:nth-child(3) .stat-value{color:var(--teal)}
+    .stat-card:nth-child(4) .stat-value{color:#e26668}
+    .stat-label{margin-top:.65rem;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .hero-note{margin:2rem 0 0;padding:1.2rem 1.4rem;border-radius:16px;background:linear-gradient(110deg,#7357ef,#a348f0);color:#fff;box-shadow:0 16px 30px rgba(115,87,239,.22)}
+    .hero-note strong{display:block;font-family:Manrope,sans-serif;font-size:1.04rem;letter-spacing:-.02em;margin-bottom:.2rem}
+    .hero-note span{font-size:.86rem;color:rgba(255,255,255,.82)}
+    section{padding:clamp(5.1rem,10vw,8.5rem) 0}
+    .section-head{max-width:720px;margin-bottom:2.55rem}
+    .section-head h2{margin:1rem 0 .7rem;font-size:clamp(2.1rem,4vw,3.35rem);line-height:1.08;letter-spacing:-.065em;font-weight:800}
+    .section-head p{margin:0;color:var(--ink-soft);font-size:1.07rem;max-width:650px}
+    .intro-section{background:#fff}
+    .intro-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(2rem,7vw,7rem);align-items:start}
+    .intro-layout .section-head{margin:0}
+    .intro-copy{color:var(--ink-soft);font-size:1.08rem;padding-top:2.8rem}
+    .intro-copy p{margin:0 0 1rem}
+    .intro-copy strong{color:var(--ink)}
+    .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3.2rem}
+    .principle{padding:1.5rem;border-radius:20px;min-height:205px}
+    .principle:nth-child(1){background:var(--butter)}
+    .principle:nth-child(2){background:var(--mint)}
+    .principle:nth-child(3){background:var(--lavender)}
+    .principle-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#fff;color:var(--purple);font-family:Manrope;font-weight:800;margin-bottom:1.2rem}
+    .principle h3{font-family:Manrope;font-size:1.1rem;margin:0 0 .45rem;letter-spacing:-.03em}
+    .principle p{font-size:.9rem;color:var(--ink-soft);margin:0}
+    .gavel-section{background:linear-gradient(160deg,#f2edff 0%,#fbfaff 62%,#fff 100%)}
+    .gavel-layout{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+    .gavel-copy h2{margin:1rem 0 .75rem;font-size:clamp(2.25rem,4.7vw,4rem);line-height:1.03;letter-spacing:-.07em}
+    .gavel-copy>p{color:var(--ink-soft);font-size:1.05rem;margin:0 0 1.5rem}
+    .project-link{display:inline-flex;align-items:center;gap:.45rem;color:var(--purple);font-family:"Space Grotesk";font-weight:600;font-size:.84rem}
+    .project-link:hover{text-decoration:underline;text-underline-offset:4px}
+    .gavel-card{background:#fff;border:1px solid #e5defb;border-radius:26px;padding:clamp(1.25rem,3vw,2rem);box-shadow:var(--shadow)}
+    .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+    .card-kicker{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);font-weight:600}
+    .status{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .58rem;border-radius:999px;background:var(--mint);color:#168a72;font-size:.68rem;font-family:"Space Grotesk";font-weight:600}
+    .status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal)}
+    .gavel-card h3{font-family:Manrope;font-size:clamp(1.4rem,2.6vw,2.1rem);line-height:1.1;letter-spacing:-.055em;margin:0 0 .45rem}
+    .gavel-card .tagline{font-family:"Space Grotesk";color:var(--purple);font-size:.8rem;margin:0 0 1.4rem}
+    .gavel-card>p{color:var(--ink-soft);margin:0 0 1.55rem;font-size:.94rem}
+    .pipeline{display:grid;grid-template-columns:1fr 1.05fr 1fr;gap:.7rem;align-items:center;margin:1.5rem 0}
+    .pipeline-node{min-height:108px;padding:.85rem;border-radius:14px;background:var(--paper);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .pipeline-node strong{font-family:"Space Grotesk";font-size:.77rem;margin-bottom:.3rem}
+    .pipeline-node span{font-size:.72rem;color:var(--muted);line-height:1.35}
+    .pipeline-node.verdict{background:var(--navy);border-color:var(--navy);color:#fff}
+    .pipeline-node.verdict span{color:#c8d2e9}
+    .pipeline-arrow{text-align:center;color:var(--purple);font-size:1.2rem;font-weight:700}
+    .gavel-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;border-top:1px solid var(--line);padding-top:1.2rem}
+    .gavel-metrics b{display:block;font-family:Manrope;font-size:1.35rem;letter-spacing:-.05em}
+    .gavel-metrics span{display:block;color:var(--muted);font-size:.7rem;margin-top:.15rem}
+    .work-section{background:#fff}
+    .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
+    .work-card{border:1px solid var(--line);border-radius:22px;padding:1.55rem;min-height:295px;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+    .work-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .work-card.featured{grid-column:span 2;background:linear-gradient(135deg,#e8fbf1,#f5fff9);border-color:#c9efdd}
+    .work-card.warm{background:var(--butter);border-color:#f4eab2}
+    .work-card.lilac{background:var(--lavender);border-color:#e1d8ff}
+    .work-card.sky{background:var(--sky);border-color:#c7ebed}
+    .work-tag{font-family:"Space Grotesk";font-size:.69rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:1.15rem}
+    .work-card h3{font-family:Manrope;font-size:1.4rem;line-height:1.13;letter-spacing:-.05em;margin:0 0 .55rem}
+    .work-card p{color:var(--ink-soft);font-size:.92rem;margin:0;max-width:65ch}
+    .work-card .metric{margin-top:auto;padding-top:1.3rem;font-family:"Space Grotesk";font-size:.75rem;color:var(--ink);font-weight:600}
+    .work-card .metric span{color:var(--muted);font-weight:500}
+    .foundation-section{background:var(--navy);color:#fff}
+    .foundation-section .eyebrow{background:rgba(255,255,255,.12);color:#c8d2ff}
+    .foundation-section .section-head p{color:#bbc7dc}
+    .foundation-section .section-head h2{color:#fff}
+    .foundation-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:1.3rem}
+    .foundation-card{border-radius:22px;padding:1.6rem;background:#222d4b;border:1px solid rgba(255,255,255,.1)}
+    .foundation-card h3{font-family:Manrope;font-size:1.15rem;letter-spacing:-.035em;margin:0 0 .5rem}
+    .foundation-card p{color:#b8c4d8;font-size:.9rem;margin:0}
+    .foundation-card.large{grid-row:span 2;background:linear-gradient(145deg,#28375d,#1d2948)}
+    .foundation-card.large h3{font-size:1.7rem;max-width:15ch}
+    .foundation-card.large p{max-width:48ch;margin-bottom:1.45rem}
+    .timeline{list-style:none;padding:0;margin:0;border-top:1px solid rgba(255,255,255,.14)}
+    .timeline li{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.14)}
+    .timeline .year{font-family:"Space Grotesk";font-size:.72rem;color:#aab7d2;min-width:4rem;padding-top:.1rem}
+    .timeline strong{display:block;font-family:Manrope;font-size:.88rem;margin-bottom:.15rem}
+    .timeline span{display:block;color:#aab7d2;font-size:.78rem;line-height:1.4}
+    .stack-chips{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1rem}
+    .stack-chip{padding:.48rem .65rem;border:1px solid rgba(255,255,255,.14);border-radius:999px;color:#d4def0;font-family:"Space Grotesk";font-size:.7rem}
+    .contact-section{background:linear-gradient(135deg,#fff8d9 0%,#fffdf1 48%,#f2edff 100%)}
+    .contact-box{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;background:#fff;border:1px solid #f0e6b5;border-radius:26px;padding:clamp(1.6rem,5vw,3.25rem);box-shadow:var(--shadow)}
+    .contact-box h2{font-family:Manrope;font-size:clamp(2rem,4.5vw,3.45rem);line-height:1.04;letter-spacing:-.065em;margin:1rem 0 .7rem;max-width:15ch}
+    .contact-box p{color:var(--ink-soft);max-width:53ch;margin:0}
+    .contact-links{display:flex;flex-direction:column;align-items:flex-end;gap:.68rem}
+    .contact-links a:not(.button){font-family:"Space Grotesk";font-size:.8rem;color:var(--purple);font-weight:600}
+    footer{background:#fff;border-top:1px solid var(--line);padding:1.4rem 0;color:var(--muted);font-size:.75rem}
+    .footer-row{display:flex;justify-content:space-between;gap:1rem;align-items:center}
+    .footer-row a:hover{color:var(--purple)}
+    @media (max-width:900px){
+      .hero-grid,.gavel-layout,.intro-layout,.foundation-grid{grid-template-columns:1fr}
+      .hero-side{max-width:620px}
+      .intro-copy{padding-top:0}
+      .foundation-card.large{grid-row:auto}
+      .contact-box{grid-template-columns:1fr;align-items:start}
+      .contact-links{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+    }
+    @media (max-width:650px){
+      .container{width:min(100% - 32px,1180px)}
+      .site-header{position:relative}
+      .nav{min-height:68px}
+      .nav-links a:not(.nav-cta){display:none}
+      .nav-links{margin-left:auto}
+      .nav-cta{padding:.58rem .7rem}
+      .hero{padding:3.7rem 0 4rem}
+      .hero h1{font-size:clamp(2.8rem,14vw,4.2rem)}
+      .stat-grid{gap:.7rem}
+      .stat-card{min-height:128px;padding:.9rem .55rem}
+      .stat-card:nth-child(2),.stat-card:nth-child(3),.stat-card:nth-child(4){transform:none}
+      .stat-value{font-size:2rem}
+      .principles,.work-grid{grid-template-columns:1fr}
+      .work-card.featured{grid-column:auto}
+      .pipeline{grid-template-columns:1fr;gap:.35rem}
+      .pipeline-arrow{transform:rotate(90deg);height:24px}
+      .gavel-metrics{gap:.45rem}
+      .gavel-metrics b{font-size:1.1rem}
+      .gavel-metrics span{font-size:.62rem}
+      .contact-links{flex-direction:column}
+      .footer-row{align-items:flex-start;flex-direction:column}
+    }
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+  </style>
 </head>
 <body>
-<div class="wrap">
-
-<header class="top">
-  <p class="name">Abhishek Jain <span>Santa Clara, CA</span></p>
-  <h1>Agents can write the pipeline. <em>Proving the output is correct</em> is the harder problem.</h1>
-  <p class="sub">Lead Software Engineer with 8+ years in production distributed systems and data platforms. I build LLM agents into real delivery workflows — and the evaluation harnesses that decide whether what they produced is right.</p>
-  <div class="links">
-    <a class="primary" href="https://github.com/Abhishek249/gavel-mcp">Gavel — the eval harness ↗</a>
-    <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé (PDF)</a>
-    <a href="https://github.com/Abhishek249">GitHub ↗</a>
-    <a href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a>
-    <a href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a>
-  </div>
-</header>
-
-<div class="readout">
-  <div><b>16+</b><small>engineers running an agentic SDLC I established</small></div>
-  <div><b>1.7–2.3×</b><small>sprint velocity vs. a comparable prior build</small></div>
-  <div><b>~4×</b><small>faster validation cycles vs. manual runbooks</small></div>
-  <div><b>724K</b><small>production surveys analyzed to size a pipeline</small></div>
-  <div><b>~10K</b><small>users onboarded across 39 customers via OAuth 2.0</small></div>
-</div>
-
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">The problem</p>
-    <div class="body">
-      <h2>Quality is what keeps agents out of production</h2>
-      <p>Coding agents got good enough to write real systems this year. What did not arrive with them is a way to know the output is correct at the speed agents produce it. In LangChain's 2026 practitioner survey, quality — accuracy, consistency, adherence to spec — is the single largest barrier to putting agents in production, named by a third of teams. Tracing has near-universal adoption at 89%; systematic offline evaluation sits at 52%.</p>
-      <p>That gap is the work I do. Not prompting, not framework tourism — <strong>the unglamorous layer that decides whether agent output ships</strong>: golden datasets, deterministic metrics, failure-mode analysis, and validation gates that run without a human in the loop.</p>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Abhishek Jain home"><span class="brand-mark">A</span><span>Abhishek Jain<small>Lead Software Engineer</small></span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#gavel">Gavel</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé <span aria-hidden="true">↗</span></a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">Flagship</p>
-    <div>
-      <h2>Gavel</h2>
-      <div class="panel">
-        <div class="panel-head">
-          <h3>MCP-native evaluation harness for agent-built data pipelines</h3>
-          <span class="chip">MIT</span><span class="chip">Python 3.11+</span>
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">AI agents · evaluation · platform</span>
+          <h1>I build <span class="accent">agentic systems</span> that can <span class="accent-two">prove their output.</span></h1>
+          <p class="hero-lede">Lead Software Engineer with 8+ years building production distributed systems. I connect <strong>LLM agents to real engineering workflows</strong> — then build the evaluation layer that decides whether what they produced is right.</p>
+          <ul class="hero-points">
+            <li><span class="check">✓</span>Agentic workflows that move from idea to deployment</li>
+            <li><span class="check">✓</span>MCP integrations grounded in real system context</li>
+            <li><span class="check">✓</span>Deterministic evals for trustworthy data and code</li>
+          </ul>
+          <div class="actions">
+            <a class="button primary" href="#gavel">Explore Gavel <span aria-hidden="true">→</span></a>
+            <a class="button light" href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Download résumé</a>
+          </div>
         </div>
-        <p class="tagline mono">The LLM decides when to validate. Gavel decides pass or fail.</p>
-        <div class="body">
-          <p>A coding agent building a data pipeline can tell you it succeeded. It cannot tell you the rows are right. Gavel is a local MCP server the agent calls to get a verdict it does not control: a declarative sandbox pins the system components, the golden and candidate datasets, the metric rubric, and the evidence required for a pass — then a deterministic engine returns a structured report the agent must answer to.</p>
+        <div class="hero-side" aria-label="Selected career metrics">
+          <div class="stat-grid">
+            <div class="stat-card"><span class="stat-value">8+</span><span class="stat-label">years in production systems</span></div>
+            <div class="stat-card"><span class="stat-value">32/32</span><span class="stat-label">injected defects detected</span></div>
+            <div class="stat-card"><span class="stat-value">3.2ms</span><span class="stat-label">median MCP-call latency</span></div>
+            <div class="stat-card"><span class="stat-value">10×</span><span class="stat-label">API latency improvement</span></div>
+          </div>
+          <div class="hero-note"><strong>Agents can write the pipeline.</strong><span>Gavel decides whether the result deserves to ship.</span></div>
         </div>
-
-        <div class="scroll">
-          <svg class="flow" viewBox="0 0 860 214" role="img" aria-label="Gavel data flow: golden and candidate datasets feed a deterministic metric engine, which produces a validation report returned as an MCP tool response with a pass or fail verdict.">
-            <defs>
-              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--rule-hard)"/>
-              </marker>
-            </defs>
-
-            <rect x="2" y="26" width="176" height="58" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
-            <text x="16" y="50" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--ink)">golden.json</text>
-            <text x="16" y="69" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">500 clean trips</text>
-
-            <rect x="2" y="112" width="176" height="58" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
-            <text x="16" y="136" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--ink)">candidate.json</text>
-            <text x="16" y="155" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">600 rows · 100 dupes</text>
-
-            <path d="M182,55 C202,55 200,84 216,84" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
-            <path d="M182,141 C202,141 200,112 216,112" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
-
-            <rect x="228" y="56" width="212" height="84" rx="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="246" y="84" font-family="Archivo, sans-serif" font-weight="600" font-size="14" fill="var(--ink)">metric engine</text>
-            <text x="246" y="104" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">exact · jaccard · row_count</text>
-            <text x="246" y="121" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">not_null · area_ratio · gte/lte</text>
-
-            <path d="M444,98 L490,98" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
-
-            <rect x="500" y="56" width="176" height="84" rx="3" fill="var(--surface)" stroke="var(--rule-hard)"/>
-            <text x="516" y="84" font-family="Archivo, sans-serif" font-weight="600" font-size="14" fill="var(--ink)">ValidationReport</text>
-            <text x="516" y="104" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">name · expected · actual</text>
-            <text x="516" y="121" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">status · context</text>
-
-            <path d="M680,98 L726,98" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
-
-            <rect x="736" y="56" width="120" height="84" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
-            <text x="752" y="84" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">MCP stdio</text>
-            <text x="752" y="101" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">to the agent</text>
-            <rect x="752" y="112" width="52" height="19" rx="2" fill="var(--verdict-soft)"/>
-            <text x="762" y="126" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="var(--verdict)">FAIL</text>
-
-            <text x="2" y="196" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)">sandbox.yaml pins components, datasets, metric rubric and required evidence</text>
-          </svg>
-        </div>
-        <p class="cap">The shipped taxi example: duplicate rows injected into an otherwise clean dataset. Row count, key uniqueness and fare total all fail, and the agent gets the specific checks that failed rather than a bare rejection.</p>
-
-        <h3>What it does that a test suite doesn't</h3>
-        <div class="body">
-          <p><strong>Catches silent success.</strong> Live adapters for Postgres, Dagster and the workflow orchestrator collect evidence from the running system, so a green orchestration run that quietly produced missing or wrong data still fails. That failure mode is invisible to ordinary pipeline monitoring, and it is the one that reaches customers.</p>
-          <p><strong>Makes evaluation declarative.</strong> Sandboxes are YAML, so the rubric is reviewable in a pull request instead of living in someone's notebook. Six MCP tools cover sandbox discovery, golden-vs-candidate validation, live evidence collection, and geospatial validation — the agent chooses when to call; it never chooses the verdict.</p>
-        </div>
-
-        <h3>Measured on a controlled fault model</h3>
-        <div class="scroll">
-          <table>
-            <thead><tr><th>Signal</th><th>Result</th><th>Conditions</th></tr></thead>
-            <tbody>
-              <tr><td class="k">defect recall</td><td class="n">100%</td><td>v0.1 fault-injection benchmark, synthetic NYC taxi data</td></tr>
-              <tr><td class="k">false positives</td><td class="n">0%</td><td>same run, clean dataset expected to pass</td></tr>
-              <tr><td class="k">MCP latency p50</td><td class="n">~3 ms</td><td>local stdio round trip</td></tr>
-              <tr><td class="k">CI</td><td class="n">green</td><td>unit tests plus a real MCP client/server boundary proof</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="cap">These numbers describe the published taxi fault model, not arbitrary production pipelines. The point of the benchmark is that the fault model is published and the run is reproducible — <span class="mono">make smoke</span> reproduces it from a clean clone.</p>
-
-        <h3>In progress</h3>
-        <p class="cap" style="margin-bottom:.6rem"><span class="chip next">next</span> OpenTelemetry traces across sandbox load, metric evaluation and each adapter call &nbsp;·&nbsp; <span class="chip next">next</span> a GitHub Action that gates pull requests on a Gavel verdict &nbsp;·&nbsp; <span class="chip next">next</span> signed evidence bundles</p>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">In production</p>
-    <div>
-      <h2>Agentic engineering at Picarro</h2>
-      <div class="body"><p>Picarro builds methane-detection and geospatial analytics for gas utilities. I lead the adoption of agent-assisted delivery across the engineering org and own the next-generation geospatial analytics platform.</p></div>
-      <ol class="work">
-        <li>
-          <h4>An agentic SDLC, end to end</h4>
-          <p>Built and operated LLM-agent workflows covering the full software lifecycle — product grooming with PMs, with a human in the loop, through to deployment — for the next-gen Geospatial Analytics platform. Established the evaluation cadence for agent output, the prompt patterns and the reusable playbooks that the rest of the org now works from.</p>
-          <span class="meta">16+ engineers · 1.7–2.3× sprint velocity vs. a comparable ~1-month build</span>
-        </li>
-        <li>
-          <h4>Context grounding via MCP</h4>
-          <p>Connected agents to the systems that hold the real state — Architecture Review Documents, decision trails, runbooks, Confluence, Jira, Postgres/PostGIS, Jenkins, Docker, SSH — so they reason over what is actually deployed rather than over a prompt someone pasted context into.</p>
-          <span class="meta">MCP server integrations across 6 internal systems</span>
-        </li>
-        <li>
-          <h4>Agentic Data Validation Playbook</h4>
-          <p>Validation-on-loop across local, staging and integration: the playbook triggers Kafka and Dagster orchestration jobs, runs database parity checks against references, and generates map-based visualizations an engineer can actually inspect.</p>
-          <span class="meta">3 environments · ~4× faster validation cycles than manual runbook execution</span>
-        </li>
-        <li>
-          <h4>Eval harness on production golden datasets</h4>
-          <p>Built the evaluation harness for an agent-built multi-step geospatial processing pipeline, then ran failure-mode analysis to separate genuine defects from algorithmic drift — and fed the results back so the agent corrected its own generated code. This is the work Gavel generalizes.</p>
-          <span class="meta">production golden-dataset references · failure-mode taxonomy</span>
-        </li>
-        <li>
-          <h4>An agent-built production app, shipped in a day</h4>
-          <p>Identified that nobody could see data transfers between Picarro and customer ERP systems. Solo-built a self-service portal for transfer status, payload inspection and re-aiming, 0→1 in eight hours with Cursor. It replaced a four-hour manual workflow and is still in production.</p>
-          <span class="meta">React · FastAPI · Keycloak · Postgres</span>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">Foundation</p>
-    <div>
-      <h2>The distributed-systems work underneath</h2>
-      <div class="body"><p>Agent tooling is only credible from someone who has run the systems it operates on. Seven years of that, before the pivot and alongside it.</p></div>
-      <ol class="work">
-        <li>
-          <h4>Sized an event-driven pipeline on evidence, not intuition</h4>
-          <p>Analyzed 724K production surveys and found 12.9× peak-to-average workload variance — which justified a Kafka worker pattern at 85% resource efficiency against 11% for an always-on design. Adopted as the reusable standard for auto-compute pipelines.</p>
-          <span class="meta">Dagster · Kafka · Kubernetes · Iceberg · S3 · Postgres</span>
-        </li>
-        <li>
-          <h4>Production OAuth 2.0 and RBAC from scratch</h4>
-          <p>Architected the authorization framework for Picarro's first mobile app: role matrix, scope definitions, policy generation and permission evaluation, on Authorization Code Flow with PKCE and FastAPI auth middleware.</p>
-          <span class="meta">39 customers · ~10K users · Keycloak · OpenID Connect</span>
-        </li>
-        <li>
-          <h4>Zero-downtime EU migration for GDPR</h4>
-          <p>Solo-built an autonomous API-driven fleet monitoring and switchover portal — Tailscale P2P mesh, FastAPI control plane, React — and moved the fleet without an outage.</p>
-          <span class="meta">80+ analyzers · 7 European customers · zero downtime</span>
-        </li>
-        <li>
-          <h4>Rescued a mobile program mid-flight</h4>
-          <p>Took technical lead of a cross-functional team of seven after mid-stream disruption, restructured execution, restored stakeholder confidence in six weeks and delivered to production in six months. Cut FastAPI endpoint response time 10× along the way.</p>
-          <span class="meta">team of 7 · 10s → 1s · Pipeline-as-Code · DevContainers (1–2 days → 15 min onboarding)</span>
-        </li>
-        <li>
-          <h4>Long-lived infrastructure that stayed up</h4>
-          <p>An over-the-air fleet upgrader for 165 customer vehicles — async downloads, SHA-256 verification, recovery paths — at a 100% upgrade success rate in production for six years and counting. Separately, cut dashboard latency roughly 100× (14s → 140ms).</p>
-          <span class="meta">Python · .NET Web API · C# / LINQ</span>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">Stack</p>
-    <div>
-      <h2>What I work in</h2>
-      <dl class="stack">
-        <div><dt>Agents &amp; tooling</dt><dd>LLM agents, agentic workflows, agent orchestration, Model Context Protocol (server and client), tool-use and function calling, context engineering, human-in-the-loop design, Claude Code, Cursor, Anthropic API, LangGraph, LangChain</dd></div>
-        <div><dt>Evaluation</dt><dd>Eval harness design, offline and regression evals, golden datasets, deterministic metrics, fault-injection benchmarking, failure-mode analysis, structured evidence reporting, validation gates in CI</dd></div>
-        <div><dt>Backend</dt><dd>Python — FastAPI, Pydantic, SQLAlchemy, Asyncio · .NET/C# · microservices · event-driven architecture · distributed systems</dd></div>
-        <div><dt>Data</dt><dd>PostgreSQL / PostGIS, MS SQL Server, DynamoDB, Apache Kafka, Apache Iceberg, Dagster, DuckDB, H3 geospatial indexing</dd></div>
-        <div><dt>Infrastructure</dt><dd>AWS — EKS, EC2, IAM, Lambda, RDS, S3, Glue · Kubernetes · Docker · DevContainers</dd></div>
-        <div><dt>Identity</dt><dd>OAuth 2.0, OpenID Connect, SSO, RBAC architectures, Keycloak</dd></div>
-        <div><dt>Delivery</dt><dd>Jenkins, ArgoCD, GitHub Actions, Artifactory / JFrog, Pipeline-as-Code</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-grid">
-    <p class="sec-label">Contact</p>
-    <div class="contact">
-      <h2>Open to agentic engineering and AI platform roles</h2>
-      <p>Particularly interested in teams working on agent evaluation, developer tooling, and the infrastructure that makes agent output trustworthy at scale. MS Computer Science, Arizona State University.</p>
-      <div class="links" style="margin-bottom:0">
-        <a class="primary" href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a>
-        <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé (PDF)</a>
-        <a href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a>
-        <a href="https://github.com/Abhishek249">GitHub ↗</a>
+    <section class="intro-section" id="about">
+      <div class="container">
+        <div class="intro-layout">
+          <div class="section-head"><span class="eyebrow">The work I care about</span><h2>Build quickly. Ground deeply. Prove continuously.</h2></div>
+          <div class="intro-copy"><p>AI systems are becoming capable of writing real software. The hard part is making their output <strong>observable, testable, and safe to trust</strong> at the speed they produce it.</p><p>My work sits at that intersection: agentic applications, AI platform foundations, and the evaluation systems that keep them honest.</p></div>
+        </div>
+        <div class="principles">
+          <article class="principle"><div class="principle-icon">01</div><h3>Build the workflow</h3><p>Turn an agent from a chat window into a repeatable software delivery workflow with clear ownership and human checkpoints.</p></article>
+          <article class="principle"><div class="principle-icon">02</div><h3>Connect the context</h3><p>Use MCP and system integrations to ground decisions in the code, data, runbooks, and production state that actually matter.</p></article>
+          <article class="principle"><div class="principle-icon">03</div><h3>Prove the result</h3><p>Compare candidate output against golden references with deterministic metrics, evidence, and an unambiguous verdict.</p></article>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-</div>
+    <section class="gavel-section" id="gavel">
+      <div class="container gavel-layout">
+        <div class="gavel-copy"><span class="eyebrow">Flagship project</span><h2>Meet <span style="color:var(--purple)">Gavel.</span></h2><p>An MCP-native evaluation harness for agent-built data pipelines. It collects evidence, compares it with a golden result, and emits a verdict the agent cannot override.</p><a class="project-link" href="https://github.com/Abhishek249/gavel-mcp">View the project on GitHub <span aria-hidden="true">↗</span></a></div>
+        <div class="gavel-card">
+          <div class="card-top"><div class="card-kicker">MCP evaluation harness</div><span class="status">open source</span></div>
+          <h3>The LLM decides when to validate. Gavel decides pass or fail.</h3>
+          <p class="tagline">Declarative sandboxes · golden datasets · deterministic evidence</p>
+          <p>A sandbox pins the system components, candidate and golden datasets, metrics, thresholds, and required evidence. The engine returns a structured report with the exact checks that passed or failed.</p>
+          <div class="pipeline" aria-label="Gavel evaluation flow">
+            <div class="pipeline-node"><strong>Golden + candidate</strong><span>datasets and live system evidence</span></div><div class="pipeline-arrow" aria-hidden="true">→</div><div class="pipeline-node"><strong>Deterministic metrics</strong><span>exact · row count · Jaccard · area drift</span></div><div class="pipeline-arrow" aria-hidden="true">→</div><div class="pipeline-node verdict"><strong>Validation report</strong><span>evidence-backed PASS / FAIL</span></div>
+          </div>
+          <div class="gavel-metrics"><div><b>100%</b><span>defect recall</span></div><div><b>0%</b><span>false positives</span></div><div><b>~3ms</b><span>MCP latency p50</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-section" id="work">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">Selected work</span><h2>Production systems, not toy demos.</h2><p>Every project below started with an operational problem and ended with a system people actually used.</p></div>
+        <div class="work-grid">
+          <article class="work-card featured"><span class="work-tag">Picarro · Agentic engineering</span><h3>An agentic SDLC for geospatial analytics</h3><p>Built and operated LLM-agent workflows across product grooming, implementation, validation, and deployment for a next-generation geospatial analytics platform. Established reusable playbooks, evaluation cadence, and human-in-the-loop checkpoints that let a 16+ engineer group move faster without losing engineering judgment.</p><div class="metric">1.7–2.3× sprint velocity <span>vs. a comparable prior build</span></div></article>
+          <article class="work-card warm"><span class="work-tag">Picarro · 0→1 · Production</span><h3>OTA Admin Portal</h3><p>Created visibility into Picarro-to-ERP transfers with real-time status, payload inspection, consumer configuration, and re-aiming. A manual 1–4 hour operational cycle became a self-service workflow that takes seconds.</p><div class="metric">React · Tailwind · FastAPI · Postgres</div></article>
+          <article class="work-card lilac"><span class="work-tag">Picarro · Data platform</span><h3>Validation-on-loop</h3><p>Connected Kafka, Dagster, Postgres/PostGIS, and map-based checks into a repeatable validation playbook across local, staging, and integration environments.</p><div class="metric">~4× faster validation <span>than manual runbooks</span></div></article>
+          <article class="work-card sky"><span class="work-tag">OneGas · Program rescue</span><h3>From disruption to production</h3><p>Tech-led a cross-functional team of seven, restored stakeholder confidence in six weeks, and delivered the mobile program in six months. Redesigned SQLAlchemy queries to cut endpoint latency from 10 seconds to 1.</p><div class="metric">10× API improvement <span>· DevContainers · CI quality gates</span></div></article>
+          <article class="work-card warm"><span class="work-tag">Picarro · Fleet infrastructure</span><h3>Zero-downtime EU migration</h3><p>Solo-built an API-driven fleet monitoring and switchover portal using Tailscale, FastAPI, and React to move 80+ analyzers across seven European customers without an outage.</p><div class="metric">80+ analyzers <span>· zero downtime</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="foundation-section">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">The foundation</span><h2>AI tooling is only credible when it understands the systems underneath.</h2><p>Distributed systems, data platforms, identity, delivery automation, and the operational habits that make new abstractions survive contact with production.</p></div>
+        <div class="foundation-grid">
+          <article class="foundation-card large"><h3>What I work across</h3><p>From the agent interface all the way down to the event stream, database, deployment pipeline, and access boundary.</p><div class="stack-chips"><span class="stack-chip">Python / FastAPI</span><span class="stack-chip">MCP</span><span class="stack-chip">Postgres / PostGIS</span><span class="stack-chip">Kafka</span><span class="stack-chip">Iceberg</span><span class="stack-chip">Dagster</span><span class="stack-chip">AWS</span><span class="stack-chip">Kubernetes</span><span class="stack-chip">Docker</span><span class="stack-chip">Keycloak</span><span class="stack-chip">GitHub Actions</span><span class="stack-chip">Jenkins</span></div></article>
+          <article class="foundation-card"><h3>Evidence over intuition</h3><p>Analyzed 724K production surveys to size an event-driven pipeline around real workload variance, not a guessed average.</p></article>
+          <article class="foundation-card"><h3>Secure by architecture</h3><p>Designed production OAuth 2.0, OpenID Connect, PKCE, and RBAC for Picarro's first mobile application.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container"><div class="contact-box"><div><span class="eyebrow">Let’s build something trustworthy</span><h2>Open to agentic engineering and AI platform roles.</h2><p>Especially interested in agent evaluation, developer tooling, and infrastructure that makes model output reliable at scale.</p></div><div class="contact-links"><a class="button primary" href="mailto:abhishek2k49@gmail.com">Start a conversation <span aria-hidden="true">→</span></a><a href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a><a href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a></div></div></div>
+    </section>
+  </main>
+
+  <footer><div class="container footer-row"><span>© 2026 Abhishek Jain · Santa Clara, CA</span><span><a href="https://github.com/Abhishek249">GitHub</a> · <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé</a></span></div></footer>
 </body>
 </html>
