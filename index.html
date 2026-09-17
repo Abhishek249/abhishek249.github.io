@@ -1,9 +1,428 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Abhishek Jain — Lead Software Engineer building LLM agents into production delivery workflows, and the evaluation harnesses that prove their output is correct. Author of Gavel, an MCP-native eval harness.">
+<meta name="author" content="Abhishek Jain">
+<link rel="canonical" href="https://abhishek249.github.io/">
 
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Abhishek Jain — Agentic Engineering">
+<meta property="og:description" content="Agents can write the pipeline. Proving the output is correct is the harder problem. Author of Gavel, an MCP-native evaluation harness for agent-built data pipelines.">
+<meta property="og:url" content="https://abhishek249.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Abhishek Jain — Agentic Engineering">
+<meta name="twitter:description" content="Agents can write the pipeline. Proving the output is correct is the harder problem.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%94%AC</text></svg>">
+
+<style>
+  :root{color-scheme:light dark}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Abhishek Jain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F1F3F6;
+  --surface:#FFFFFF;
+  --sunk:#E7EAEF;
+  --ink:#11151C;
+  --ink-2:#39424F;
+  --muted:#6B7584;
+  --rule:#DBE0E7;
+  --rule-hard:#BEC6D1;
+  --accent:#2B3A67;
+  --accent-soft:#E3E7F1;
+  --verdict:#2C7A55;
+  --verdict-soft:#DFEDE5;
+  --warn:#8A5A12;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1217; --surface:#161B22; --sunk:#1D232C;
+    --ink:#E9ECF1; --ink-2:#C2C9D4; --muted:#8B95A4;
+    --rule:#262D38; --rule-hard:#3A4350;
+    --accent:#9DB0E2; --accent-soft:#1C2436;
+    --verdict:#71C29A; --verdict-soft:#18291F; --warn:#D2A05A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1217; --surface:#161B22; --sunk:#1D232C;
+  --ink:#E9ECF1; --ink-2:#C2C9D4; --muted:#8B95A4;
+  --rule:#262D38; --rule-hard:#3A4350;
+  --accent:#9DB0E2; --accent-soft:#1C2436;
+  --verdict:#71C29A; --verdict-soft:#18291F; --warn:#D2A05A;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:64rem;margin:0 auto;padding-inline:clamp(1rem,4vw,3rem);padding-block:0 4rem}
+p{margin:0 0 1em}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace}
+
+/* ---------- masthead ---------- */
+header.top{padding-block:clamp(2.5rem,6vw,4.5rem) 0}
+.name{
+  font-family:Archivo,system-ui,sans-serif;font-weight:700;
+  font-size:clamp(1.15rem,.9rem + 1vw,1.4rem);letter-spacing:-.01em;
+  margin:0 0 1.6rem;display:flex;flex-wrap:wrap;gap:.2rem .9rem;align-items:baseline;
+}
+.name span{
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+h1{
+  font-family:Archivo,system-ui,sans-serif;font-weight:600;
+  font-size:clamp(1.9rem,1.1rem + 3.4vw,3.15rem);line-height:1.08;
+  letter-spacing:-.022em;margin:0 0 1.2rem;max-width:20ch;text-wrap:balance;
+}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{font-size:clamp(1rem,.95rem + .3vw,1.125rem);color:var(--ink-2);max-width:56ch;margin:0 0 2rem}
+.links{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.8rem}
+.links a{
+  font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.02em;
+  text-decoration:none;color:var(--ink);background:var(--surface);
+  border:1px solid var(--rule-hard);padding:.5rem .85rem;border-radius:3px;
+  display:inline-flex;align-items:center;gap:.45rem;
+}
+.links a:hover{border-color:var(--accent);color:var(--accent)}
+.links a.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+:root[data-theme="dark"] .links a.primary,
+html:not([data-theme="light"]) .links a.primary{color:var(--paper)}
+
+/* ---------- readout strip ---------- */
+.readout{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));
+  border-top:1px solid var(--rule-hard);border-bottom:1px solid var(--rule-hard);
+  margin-bottom:clamp(3rem,7vw,4.5rem);
+}
+.readout div{padding:1rem 1.1rem 1.05rem 0;border-bottom:1px solid var(--rule)}
+.readout div:nth-last-child(-n+2){border-bottom:none}
+@media (max-width:40rem){.readout div{border-bottom:1px solid var(--rule)}
+  .readout div:last-child{border-bottom:none}}
+.readout b{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:1.65rem;line-height:1;
+  display:block;margin-bottom:.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+.readout small{font-size:.78rem;color:var(--muted);line-height:1.45;display:block}
+
+/* ---------- sections ---------- */
+section{margin-bottom:clamp(3rem,7vw,4.5rem)}
+.sec-grid{display:grid;gap:.6rem 2.5rem}
+.sec-grid > *{min-width:0}
+@media (min-width:56rem){.sec-grid{grid-template-columns:9rem 1fr}}
+.sec-label{
+  font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);padding-top:.5rem;
+}
+h2{
+  font-family:Archivo,sans-serif;font-weight:600;
+  font-size:clamp(1.35rem,1.1rem + 1vw,1.75rem);line-height:1.18;
+  letter-spacing:-.014em;margin:0 0 .8rem;text-wrap:balance;
+}
+h3{font-family:Archivo,sans-serif;font-weight:600;font-size:1.0625rem;margin:1.8rem 0 .4rem;letter-spacing:-.005em}
+.body{max-width:64ch}
+.body p{color:var(--ink-2)}
+.body p strong{color:var(--ink);font-weight:600}
+
+/* ---------- gavel panel ---------- */
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:clamp(1.1rem,3vw,1.8rem);margin-bottom:1.4rem;min-width:0}
+.panel-head{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:baseline;margin-bottom:.3rem}
+.panel-head h3{margin:0;font-size:1.2rem}
+.tagline{font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--accent);margin:0 0 1.1rem}
+.chip{
+  font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .5rem;border-radius:2px;font-weight:600;background:var(--sunk);color:var(--ink-2);
+}
+.chip.pass{background:var(--verdict-soft);color:var(--verdict)}
+.chip.next{background:var(--accent-soft);color:var(--accent)}
+
+.scroll{overflow-x:auto;max-width:100%;margin:1.2rem 0 .4rem}
+svg.flow{min-width:660px;width:100%;height:auto;display:block}
+.cap{font-size:.8rem;color:var(--muted);margin:.2rem 0 0;max-width:64ch}
+
+table{border-collapse:collapse;width:100%;min-width:24rem;font-size:.875rem}
+thead th{
+  text-align:left;font-family:"JetBrains Mono",monospace;font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;
+  padding:0 1rem .5rem 0;border-bottom:1px solid var(--rule-hard);
+}
+tbody td{padding:.6rem 1rem .6rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+td.k{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--ink-2);white-space:nowrap}
+
+/* ---------- work list ---------- */
+ol.work{list-style:none;margin:0;padding:0}
+ol.work li{padding:1.15rem 0;border-bottom:1px solid var(--rule)}
+ol.work li:first-child{border-top:1px solid var(--rule-hard)}
+ol.work h4{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:1.02rem;
+  margin:0 0 .3rem;letter-spacing:-.004em;
+}
+ol.work p{margin:0;color:var(--ink-2);font-size:.925rem;max-width:64ch}
+ol.work .meta{
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--muted);
+  display:block;margin-top:.5rem;letter-spacing:.03em;
+}
+
+/* ---------- stack ---------- */
+dl.stack{margin:0;border-top:1px solid var(--rule-hard)}
+dl.stack > div{display:grid;gap:.1rem .9rem;padding:.75rem 0;border-bottom:1px solid var(--rule)}
+@media (min-width:46rem){dl.stack > div{grid-template-columns:13rem 1fr}}
+dl.stack dt{font-family:"JetBrains Mono",monospace;font-size:.75rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding-top:.15rem}
+dl.stack dd{margin:0;font-size:.9rem;color:var(--ink-2);line-height:1.55}
+
+/* ---------- contact ---------- */
+.contact{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:clamp(1.3rem,4vw,2.2rem)}
+.contact h2{margin-bottom:.5rem}
+.contact p{color:var(--ink-2);max-width:56ch}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
 <body>
-    <h1>Hello World</h1>
-    <p>I'm hosted with GitHub Pages.</p>
-</body>
+<div class="wrap">
 
+<header class="top">
+  <p class="name">Abhishek Jain <span>Santa Clara, CA</span></p>
+  <h1>Agents can write the pipeline. <em>Proving the output is correct</em> is the harder problem.</h1>
+  <p class="sub">Lead Software Engineer with 8+ years in production distributed systems and data platforms. I build LLM agents into real delivery workflows — and the evaluation harnesses that decide whether what they produced is right.</p>
+  <div class="links">
+    <a class="primary" href="https://github.com/Abhishek249/gavel-mcp">Gavel — the eval harness ↗</a>
+    <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé (PDF)</a>
+    <a href="https://github.com/Abhishek249">GitHub ↗</a>
+    <a href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a>
+    <a href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a>
+  </div>
+</header>
+
+<div class="readout">
+  <div><b>16+</b><small>engineers running an agentic SDLC I established</small></div>
+  <div><b>1.7–2.3×</b><small>sprint velocity vs. a comparable prior build</small></div>
+  <div><b>~4×</b><small>faster validation cycles vs. manual runbooks</small></div>
+  <div><b>724K</b><small>production surveys analyzed to size a pipeline</small></div>
+  <div><b>~10K</b><small>users onboarded across 39 customers via OAuth 2.0</small></div>
+</div>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">The problem</p>
+    <div class="body">
+      <h2>Quality is what keeps agents out of production</h2>
+      <p>Coding agents got good enough to write real systems this year. What did not arrive with them is a way to know the output is correct at the speed agents produce it. In LangChain's 2026 practitioner survey, quality — accuracy, consistency, adherence to spec — is the single largest barrier to putting agents in production, named by a third of teams. Tracing has near-universal adoption at 89%; systematic offline evaluation sits at 52%.</p>
+      <p>That gap is the work I do. Not prompting, not framework tourism — <strong>the unglamorous layer that decides whether agent output ships</strong>: golden datasets, deterministic metrics, failure-mode analysis, and validation gates that run without a human in the loop.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">Flagship</p>
+    <div>
+      <h2>Gavel</h2>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>MCP-native evaluation harness for agent-built data pipelines</h3>
+          <span class="chip">MIT</span><span class="chip">Python 3.11+</span>
+        </div>
+        <p class="tagline mono">The LLM decides when to validate. Gavel decides pass or fail.</p>
+        <div class="body">
+          <p>A coding agent building a data pipeline can tell you it succeeded. It cannot tell you the rows are right. Gavel is a local MCP server the agent calls to get a verdict it does not control: a declarative sandbox pins the system components, the golden and candidate datasets, the metric rubric, and the evidence required for a pass — then a deterministic engine returns a structured report the agent must answer to.</p>
+        </div>
+
+        <div class="scroll">
+          <svg class="flow" viewBox="0 0 860 214" role="img" aria-label="Gavel data flow: golden and candidate datasets feed a deterministic metric engine, which produces a validation report returned as an MCP tool response with a pass or fail verdict.">
+            <defs>
+              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--rule-hard)"/>
+              </marker>
+            </defs>
+
+            <rect x="2" y="26" width="176" height="58" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
+            <text x="16" y="50" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--ink)">golden.json</text>
+            <text x="16" y="69" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">500 clean trips</text>
+
+            <rect x="2" y="112" width="176" height="58" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
+            <text x="16" y="136" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--ink)">candidate.json</text>
+            <text x="16" y="155" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">600 rows · 100 dupes</text>
+
+            <path d="M182,55 C202,55 200,84 216,84" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
+            <path d="M182,141 C202,141 200,112 216,112" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
+
+            <rect x="228" y="56" width="212" height="84" rx="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="246" y="84" font-family="Archivo, sans-serif" font-weight="600" font-size="14" fill="var(--ink)">metric engine</text>
+            <text x="246" y="104" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">exact · jaccard · row_count</text>
+            <text x="246" y="121" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">not_null · area_ratio · gte/lte</text>
+
+            <path d="M444,98 L490,98" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
+
+            <rect x="500" y="56" width="176" height="84" rx="3" fill="var(--surface)" stroke="var(--rule-hard)"/>
+            <text x="516" y="84" font-family="Archivo, sans-serif" font-weight="600" font-size="14" fill="var(--ink)">ValidationReport</text>
+            <text x="516" y="104" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">name · expected · actual</text>
+            <text x="516" y="121" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">status · context</text>
+
+            <path d="M680,98 L726,98" fill="none" stroke="var(--rule-hard)" stroke-width="1.5" marker-end="url(#ar)"/>
+
+            <rect x="736" y="56" width="120" height="84" rx="3" fill="var(--sunk)" stroke="var(--rule-hard)"/>
+            <text x="752" y="84" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">MCP stdio</text>
+            <text x="752" y="101" font-family="Public Sans, sans-serif" font-size="12" fill="var(--muted)">to the agent</text>
+            <rect x="752" y="112" width="52" height="19" rx="2" fill="var(--verdict-soft)"/>
+            <text x="762" y="126" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="var(--verdict)">FAIL</text>
+
+            <text x="2" y="196" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)">sandbox.yaml pins components, datasets, metric rubric and required evidence</text>
+          </svg>
+        </div>
+        <p class="cap">The shipped taxi example: duplicate rows injected into an otherwise clean dataset. Row count, key uniqueness and fare total all fail, and the agent gets the specific checks that failed rather than a bare rejection.</p>
+
+        <h3>What it does that a test suite doesn't</h3>
+        <div class="body">
+          <p><strong>Catches silent success.</strong> Live adapters for Postgres, Dagster and the workflow orchestrator collect evidence from the running system, so a green orchestration run that quietly produced missing or wrong data still fails. That failure mode is invisible to ordinary pipeline monitoring, and it is the one that reaches customers.</p>
+          <p><strong>Makes evaluation declarative.</strong> Sandboxes are YAML, so the rubric is reviewable in a pull request instead of living in someone's notebook. Six MCP tools cover sandbox discovery, golden-vs-candidate validation, live evidence collection, and geospatial validation — the agent chooses when to call; it never chooses the verdict.</p>
+        </div>
+
+        <h3>Measured on a controlled fault model</h3>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Signal</th><th>Result</th><th>Conditions</th></tr></thead>
+            <tbody>
+              <tr><td class="k">defect recall</td><td class="n">100%</td><td>v0.1 fault-injection benchmark, synthetic NYC taxi data</td></tr>
+              <tr><td class="k">false positives</td><td class="n">0%</td><td>same run, clean dataset expected to pass</td></tr>
+              <tr><td class="k">MCP latency p50</td><td class="n">~3 ms</td><td>local stdio round trip</td></tr>
+              <tr><td class="k">CI</td><td class="n">green</td><td>unit tests plus a real MCP client/server boundary proof</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cap">These numbers describe the published taxi fault model, not arbitrary production pipelines. The point of the benchmark is that the fault model is published and the run is reproducible — <span class="mono">make smoke</span> reproduces it from a clean clone.</p>
+
+        <h3>In progress</h3>
+        <p class="cap" style="margin-bottom:.6rem"><span class="chip next">next</span> OpenTelemetry traces across sandbox load, metric evaluation and each adapter call &nbsp;·&nbsp; <span class="chip next">next</span> a GitHub Action that gates pull requests on a Gavel verdict &nbsp;·&nbsp; <span class="chip next">next</span> signed evidence bundles</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">In production</p>
+    <div>
+      <h2>Agentic engineering at Picarro</h2>
+      <div class="body"><p>Picarro builds methane-detection and geospatial analytics for gas utilities. I lead the adoption of agent-assisted delivery across the engineering org and own the next-generation geospatial analytics platform.</p></div>
+      <ol class="work">
+        <li>
+          <h4>An agentic SDLC, end to end</h4>
+          <p>Built and operated LLM-agent workflows covering the full software lifecycle — product grooming with PMs, with a human in the loop, through to deployment — for the next-gen Geospatial Analytics platform. Established the evaluation cadence for agent output, the prompt patterns and the reusable playbooks that the rest of the org now works from.</p>
+          <span class="meta">16+ engineers · 1.7–2.3× sprint velocity vs. a comparable ~1-month build</span>
+        </li>
+        <li>
+          <h4>Context grounding via MCP</h4>
+          <p>Connected agents to the systems that hold the real state — Architecture Review Documents, decision trails, runbooks, Confluence, Jira, Postgres/PostGIS, Jenkins, Docker, SSH — so they reason over what is actually deployed rather than over a prompt someone pasted context into.</p>
+          <span class="meta">MCP server integrations across 6 internal systems</span>
+        </li>
+        <li>
+          <h4>Agentic Data Validation Playbook</h4>
+          <p>Validation-on-loop across local, staging and integration: the playbook triggers Kafka and Dagster orchestration jobs, runs database parity checks against references, and generates map-based visualizations an engineer can actually inspect.</p>
+          <span class="meta">3 environments · ~4× faster validation cycles than manual runbook execution</span>
+        </li>
+        <li>
+          <h4>Eval harness on production golden datasets</h4>
+          <p>Built the evaluation harness for an agent-built multi-step geospatial processing pipeline, then ran failure-mode analysis to separate genuine defects from algorithmic drift — and fed the results back so the agent corrected its own generated code. This is the work Gavel generalizes.</p>
+          <span class="meta">production golden-dataset references · failure-mode taxonomy</span>
+        </li>
+        <li>
+          <h4>An agent-built production app, shipped in a day</h4>
+          <p>Identified that nobody could see data transfers between Picarro and customer ERP systems. Solo-built a self-service portal for transfer status, payload inspection and re-aiming, 0→1 in eight hours with Cursor. It replaced a four-hour manual workflow and is still in production.</p>
+          <span class="meta">React · FastAPI · Keycloak · Postgres</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">Foundation</p>
+    <div>
+      <h2>The distributed-systems work underneath</h2>
+      <div class="body"><p>Agent tooling is only credible from someone who has run the systems it operates on. Seven years of that, before the pivot and alongside it.</p></div>
+      <ol class="work">
+        <li>
+          <h4>Sized an event-driven pipeline on evidence, not intuition</h4>
+          <p>Analyzed 724K production surveys and found 12.9× peak-to-average workload variance — which justified a Kafka worker pattern at 85% resource efficiency against 11% for an always-on design. Adopted as the reusable standard for auto-compute pipelines.</p>
+          <span class="meta">Dagster · Kafka · Kubernetes · Iceberg · S3 · Postgres</span>
+        </li>
+        <li>
+          <h4>Production OAuth 2.0 and RBAC from scratch</h4>
+          <p>Architected the authorization framework for Picarro's first mobile app: role matrix, scope definitions, policy generation and permission evaluation, on Authorization Code Flow with PKCE and FastAPI auth middleware.</p>
+          <span class="meta">39 customers · ~10K users · Keycloak · OpenID Connect</span>
+        </li>
+        <li>
+          <h4>Zero-downtime EU migration for GDPR</h4>
+          <p>Solo-built an autonomous API-driven fleet monitoring and switchover portal — Tailscale P2P mesh, FastAPI control plane, React — and moved the fleet without an outage.</p>
+          <span class="meta">80+ analyzers · 7 European customers · zero downtime</span>
+        </li>
+        <li>
+          <h4>Rescued a mobile program mid-flight</h4>
+          <p>Took technical lead of a cross-functional team of seven after mid-stream disruption, restructured execution, restored stakeholder confidence in six weeks and delivered to production in six months. Cut FastAPI endpoint response time 10× along the way.</p>
+          <span class="meta">team of 7 · 10s → 1s · Pipeline-as-Code · DevContainers (1–2 days → 15 min onboarding)</span>
+        </li>
+        <li>
+          <h4>Long-lived infrastructure that stayed up</h4>
+          <p>An over-the-air fleet upgrader for 165 customer vehicles — async downloads, SHA-256 verification, recovery paths — at a 100% upgrade success rate in production for six years and counting. Separately, cut dashboard latency roughly 100× (14s → 140ms).</p>
+          <span class="meta">Python · .NET Web API · C# / LINQ</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">Stack</p>
+    <div>
+      <h2>What I work in</h2>
+      <dl class="stack">
+        <div><dt>Agents &amp; tooling</dt><dd>LLM agents, agentic workflows, agent orchestration, Model Context Protocol (server and client), tool-use and function calling, context engineering, human-in-the-loop design, Claude Code, Cursor, Anthropic API, LangGraph, LangChain</dd></div>
+        <div><dt>Evaluation</dt><dd>Eval harness design, offline and regression evals, golden datasets, deterministic metrics, fault-injection benchmarking, failure-mode analysis, structured evidence reporting, validation gates in CI</dd></div>
+        <div><dt>Backend</dt><dd>Python — FastAPI, Pydantic, SQLAlchemy, Asyncio · .NET/C# · microservices · event-driven architecture · distributed systems</dd></div>
+        <div><dt>Data</dt><dd>PostgreSQL / PostGIS, MS SQL Server, DynamoDB, Apache Kafka, Apache Iceberg, Dagster, DuckDB, H3 geospatial indexing</dd></div>
+        <div><dt>Infrastructure</dt><dd>AWS — EKS, EC2, IAM, Lambda, RDS, S3, Glue · Kubernetes · Docker · DevContainers</dd></div>
+        <div><dt>Identity</dt><dd>OAuth 2.0, OpenID Connect, SSO, RBAC architectures, Keycloak</dd></div>
+        <div><dt>Delivery</dt><dd>Jenkins, ArgoCD, GitHub Actions, Artifactory / JFrog, Pipeline-as-Code</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-grid">
+    <p class="sec-label">Contact</p>
+    <div class="contact">
+      <h2>Open to agentic engineering and AI platform roles</h2>
+      <p>Particularly interested in teams working on agent evaluation, developer tooling, and the infrastructure that makes agent output trustworthy at scale. MS Computer Science, Arizona State University.</p>
+      <div class="links" style="margin-bottom:0">
+        <a class="primary" href="mailto:abhishek2k49@gmail.com">abhishek2k49@gmail.com</a>
+        <a href="Abhishek_Jain_AI_Agentic_Engineer.pdf">Résumé (PDF)</a>
+        <a href="https://www.linkedin.com/in/abhishekjain026239/">LinkedIn ↗</a>
+        <a href="https://github.com/Abhishek249">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
 </html>
